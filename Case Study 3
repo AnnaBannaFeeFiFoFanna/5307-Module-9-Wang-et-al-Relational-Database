@@ -6,7 +6,22 @@ DROP TABLE IF EXISTS AIR_FILTER CASCADE;
 DROP TABLE IF EXISTS AIR_DUCT CASCADE;
 DROP TABLE IF EXISTS DIFFUSER CASCADE;
 
-/*Notes.*/
+CREATE TABLE EQUIP_LIST_FOR_AUTO_SIZING (
+NO_MAIN_EQUIP_TYPE CHAR(3) NOT NULL,
+/*Cold and heat source, Valves and sensors, or Fresh air system*/
+CATEGORY VARCHAR(20) NOT NULL,
+MAIN_EQUIP_TYPE_DESCRIP VARCHAR(30) NOT NULL,
+CONSTRAINT PKEQUIP_LIST_FOR_AUTO_SIZING PRIMARY KEY (NO_MAIN_EQUIP_TYPE)
+);
+
+INSERT INTO EQUIP_LIST_FOR_AUTO_SIZING VALUES ('001', 'Cold and heat source', 'Air source heat pump');
+INSERT INTO EQUIP_LIST_FOR_AUTO_SIZING VALUES ('002', 'Cold and heat source', 'Air source heat pump');
+INSERT INTO EQUIP_LIST_FOR_AUTO_SIZING VALUES ('003', 'Cold and heat source', 'Air source heat pump');
+INSERT INTO EQUIP_LIST_FOR_AUTO_SIZING VALUES ('004', 'Cold and heat source', 'Air source heat pump');
+INSERT INTO EQUIP_LIST_FOR_AUTO_SIZING VALUES ('005', 'Cold and heat source', 'Air source heat pump');
+INSERT INTO EQUIP_LIST_FOR_AUTO_SIZING VALUES ('006', 'Cold and heat source', 'Air source heat pump');
+INSERT INTO EQUIP_LIST_FOR_AUTO_SIZING VALUES ('007', 'Cold and heat source', 'Air source heat pump');
+INSERT INTO EQUIP_LIST_FOR_AUTO_SIZING VALUES ('008', 'Cold and heat source', 'Air source heat pump');
 
 CREATE TABLE MANUFACTURER_INFO (
 MANU_CODE CHAR(3) NOT NULL,
@@ -20,6 +35,20 @@ MANU_ZIP CHAR(5),
 MANU_PHONE CHAR(14),
 MANU_EMAIL VARCHAR(45),
 CONSTRAINT PKMANUFACTURER_INFO PRIMARY KEY (MANU_CODE)
+);
+
+CREATE TABLE FRESH_AIR_GRILLE (
+NO_FRESH_AIR_GRILLE CHAR(5) NOT NULL,
+NO_MAIN_EQUIP_TYPE CHAR(3) NOT NULL,
+MANU_CODE CHAR(3) NOT NULL,
+MANU_DESCRIPTION VARCHAR(90) NOT NULL,
+FRESH_AIR_GRILLE_WIDTH_IN FLOAT NOT NULL,
+FRESH_AIR_GRILLE_HEIGHT_IN FLOAT NOT NULL,
+CONSTRAINT PKFRESH_AIR_GRILLE PRIMARY KEY (NO_FRESH_AIR_GRILLE)
+CONSTRAINT FKNO_MAIN_EQUIP_TYPE FOREIGN KEY (NO_MAIN_EQUIP_TYPE)
+REFERENCES EQUIP_LIST_FOR_AUTO_SIZING(NO_MAIN_EQUIP_TYPE) ON DELETE CASCADE,
+CONSTRAINT FKMANU_CODE FOREIGN KEY (MANU_CODE)
+REFERENCES MANUFACTURER_INFO(MANU_CODE) ON DELETE CASCADE
 );
 
 CREATE TABLE AIR_FILTER (
@@ -40,14 +69,17 @@ CONSTRAINT FKMANU_CODE FOREIGN KEY (MANU_CODE)
 REFERENCES MANUFACTURER_INFO(MANU_CODE) ON DELETE CASCADE
 );
 
-CREATE TABLE FRESH_AIR_GRILLE (
-NO_FRESH_AIR_GRILLE CHAR(5) NOT NULL,
+CREATE TABLE AIR_DUCT (
+NO_AIR_DUCT CHAR(5) NOT NULL,
 NO_MAIN_EQUIP_TYPE CHAR(3) NOT NULL,
 MANU_CODE CHAR(3) NOT NULL,
 MANU_DESCRIPTION VARCHAR(90) NOT NULL,
-FRESH_AIR_GRILLE_WIDTH_IN FLOAT NOT NULL,
-FRESH_AIR_GRILLE_HEIGHT_IN FLOAT NOT NULL,
-CONSTRAINT PKFRESH_AIR_GRILLE PRIMARY KEY (NO_FRESH_AIR_GRILLE)
+TYPE_AIR_DUCT VARCHAR(8) NOT NULL,
+/*Flexible vs Fixed Metal*/
+AIR_DUCT_DIAMETER FLOAT NOT NULL,
+AIR_DUCT_LENGTH FLOAT NOT NULL,
+R_VALUE FLOAT NOT NULL,
+CONSTRAINT PKAIR_DUCT PRIMARY KEY (NO_AIR_DUCT)
 CONSTRAINT FKNO_MAIN_EQUIP_TYPE FOREIGN KEY (NO_MAIN_EQUIP_TYPE)
 REFERENCES EQUIP_LIST_FOR_AUTO_SIZING(NO_MAIN_EQUIP_TYPE) ON DELETE CASCADE,
 CONSTRAINT FKMANU_CODE FOREIGN KEY (MANU_CODE)
@@ -101,6 +133,24 @@ INSERT INTO AIR_FILTER VALUES ('60127', '025', '686', 'S-22969', 'MERV', '8', '2
 INSERT INTO AIR_FILTER VALUES ('47867', '025', '686', 'S-24678', 'MERV', '13', '16', '25', '1');
 INSERT INTO AIR_FILTER VALUES ('87860', '025', '686', 'S-24152', 'MERV', '13', '20', '20', '1');
 
+INSERT INTO AIR_FILTER VALUES ('59344', '027', '658', 'Insulated Flexible Ducts R6 Silver Jacket', 'Flexible', '4', '12', '6');
+INSERT INTO AIR_FILTER VALUES ('23306', '027', '658', 'Insulated Flexible Ducts R6 Silver Jacket', 'Flexible', '4', '25', '6');
+INSERT INTO AIR_FILTER VALUES ('64593', '027', '658', 'Insulated Flexible Ducts R6 Silver Jacket', 'Flexible', '5', '25', '6');
+INSERT INTO AIR_FILTER VALUES ('89615', '027', '658', 'Insulated Flexible Ducts R6 Silver Jacket', 'Flexible', '6', '25', '6');
+INSERT INTO AIR_FILTER VALUES ('56164', '027', '658', 'Insulated Flexible Ducts R6 Silver Jacket', 'Flexible', '7', '25', '6');
+INSERT INTO AIR_FILTER VALUES ('43956', '027', '658', 'Insulated Flexible Ducts R6 Silver Jacket', 'Flexible', '8', '25', '6');
+INSERT INTO AIR_FILTER VALUES ('17096', '027', '658', 'Insulated Flexible Ducts R6 Silver Jacket', 'Flexible', '10', '25', '6');
+INSERT INTO AIR_FILTER VALUES ('64883', '027', '658', 'Insulated Flexible Ducts R6 Silver Jacket', 'Flexible', '12', '25', '6');
+INSERT INTO AIR_FILTER VALUES ('75172', '027', '658', 'Insulated Flexible Ducts R6 Silver Jacket', 'Flexible', '14', '25', '6');
+INSERT INTO AIR_FILTER VALUES ('41344', '027', '658', 'Insulated Flexible Ducts R8 Silver Jacket', 'Flexible', '4', '25', '8');
+INSERT INTO AIR_FILTER VALUES ('31610', '027', '658', 'Insulated Flexible Ducts R8 Silver Jacket', 'Flexible', '5', '25', '8');
+INSERT INTO AIR_FILTER VALUES ('31174', '027', '658', 'Insulated Flexible Ducts R8 Silver Jacket', 'Flexible', '6', '25', '8');
+INSERT INTO AIR_FILTER VALUES ('54126', '027', '658', 'Insulated Flexible Ducts R8 Silver Jacket', 'Flexible', '7', '25', '8');
+INSERT INTO AIR_FILTER VALUES ('32711', '027', '658', 'Insulated Flexible Ducts R8 Silver Jacket', 'Flexible', '8', '25', '8');
+INSERT INTO AIR_FILTER VALUES ('23264', '027', '658', 'Insulated Flexible Ducts R8 Silver Jacket', 'Flexible', '10', '25', '8');
+INSERT INTO AIR_FILTER VALUES ('68742', '027', '658', 'Insulated Flexible Ducts R8 Silver Jacket', 'Flexible', '12', '25', '8');
+INSERT INTO AIR_FILTER VALUES ('10624', '027', '658', 'Insulated Flexible Ducts R8 Silver Jacket', 'Flexible', '14', '25', '8');
+
 INSERT INTO DIFFUSER VALUES ('23114', '032', '623', '20 — Steel Round Ceiling Diffuser', 'Round Ceiling Diffuser', '', '6.5', '11.0125', '');
 INSERT INTO DIFFUSER VALUES ('38921', '032', '623', '20 — Steel Round Ceiling Diffuser', 'Round Ceiling Diffuser', '', '8.5', '14.75', '');
 INSERT INTO DIFFUSER VALUES ('50406', '032', '623', '20 — Steel Round Ceiling Diffuser', 'Round Ceiling Diffuser', '', '10.5', '18.25', '');
@@ -122,6 +172,8 @@ INSERT INTO DIFFUSER VALUES ('29086', '032', '623', '24 — Steel, Step Down, Sq
 INSERT INTO MANUFACTURER_INFO VALUES ('276', 'Steven R', '3M Filtrete', '3M Center', 'Building 225-3S-05', 'St. Paul', 'MN', '55144', '(808)-388-3458', '3mproducts.filtrete.us@mmm.com');
 INSERT INTO MANUFACTURER_INFO VALUES ('618', '', 'AAF Flanders', '9920 Corporate Campus Drive', 'Suite 2200', 'Louisville', 'KY', '40223', '(888)-223-2003', '');
 INSERT INTO MANUFACTURER_INFO VALUES ('619', '', 'Carrier', '13995 Pasteur Boulevard', '', 'Palm Beach Gardens', 'FL', '33418', '(800)-227-7437', '');
+INSERT INTO MANUFACTURER_INFO VALUES ('620', '', 'Everbilt', '11419 Ferrell Dr.', '', 'Farmers Branch', 'TX', '75234', '(800)-430-3376', '');
 INSERT INTO MANUFACTURER_INFO VALUES ('623', '', 'Duravent', '28 W. Adams', 'Suite 1810', 'Detroit', 'MI', '48226', '', '');
 INSERT INTO MANUFACTURER_INFO VALUES ('648', '', 'Honeywell', '', '', '', '', '', '', '');
+INSERT INTO MANUFACTURER_INFO VALUES ('658', '', 'Master Flow', '', '', '', '', '', '', '');
 INSERT INTO MANUFACTURER_INFO VALUES ('686', '', 'ULINE', '12575 Uline Drive', 'Pleasant Prairie', '', 'WI', '53158', '(800)-295-5510', 'customer.service@uline.com');
