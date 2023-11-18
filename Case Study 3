@@ -6,9 +6,7 @@ DROP TABLE IF EXISTS AIR_FILTER CASCADE;
 DROP TABLE IF EXISTS AIR_DUCT CASCADE;
 DROP TABLE IF EXISTS DIFFUSER CASCADE;
 
-/*Data is stored as first of month, but is cumulative total for month.*/
-CHAR(3) NOT NULL,
-VARCHAR(30) NOT NULL,
+/*Notes.*/
 
 CREATE TABLE MANUFACTURER_INFO (
 MANU_CODE CHAR(3) NOT NULL,
@@ -24,22 +22,53 @@ MANU_EMAIL VARCHAR(45),
 CONSTRAINT PKMANUFACTURER_INFO PRIMARY KEY (MANU_CODE)
 );
 
+CREATE TABLE FRESH_AIR_GRILLE (
+NO_FRESH_AIR_GRILLE CHAR(5) NOT NULL,
+NO_MAIN_EQUIP_TYPE CHAR(3) NOT NULL,
+MANU_CODE CHAR(3) NOT NULL,
+MANU_DESCRIPTION VARCHAR(90) NOT NULL,
+FRESH_AIR_GRILLE_WIDTH_IN FLOAT NOT NULL,
+FRESH_AIR_GRILLE_HEIGHT_IN FLOAT NOT NULL,
+CONSTRAINT PKFRESH_AIR_GRILLE PRIMARY KEY (NO_FRESH_AIR_GRILLE)
+CONSTRAINT FKNO_MAIN_EQUIP_TYPE FOREIGN KEY (NO_MAIN_EQUIP_TYPE)
+REFERENCES EQUIP_LIST_FOR_AUTO_SIZING(NO_MAIN_EQUIP_TYPE) ON DELETE CASCADE,
+CONSTRAINT FKMANU_CODE FOREIGN KEY (MANU_CODE)
+REFERENCES MANUFACTURER_INFO(MANU_CODE) ON DELETE CASCADE
+);
+
 CREATE TABLE DIFFUSER (
 NO_DIFFUSER CHAR(5) NOT NULL,
 NO_MAIN_EQUIP_TYPE CHAR(3) NOT NULL,
 MANU_CODE CHAR(3) NOT NULL,
-MANU_DESCRIPTION VARCHAR(90),
+MANU_DESCRIPTION VARCHAR(90) NOT NULL,
 TYPE_DIFFUSER VARCHAR(45) NOT NULL,
 SQUARED_IN FLOAT,
 DIAMETER_DUCT_IN FLOAT,
 DIAMETER_OUTSIDE_IN FLOAT,
-COLLAR_IN FLOAT
+COLLAR_IN FLOAT,
 CONSTRAINT PKDIFFUSER PRIMARY KEY (NO_DIFFUSER)
 CONSTRAINT FKNO_MAIN_EQUIP_TYPE FOREIGN KEY (NO_MAIN_EQUIP_TYPE)
 REFERENCES EQUIP_LIST_FOR_AUTO_SIZING(NO_MAIN_EQUIP_TYPE) ON DELETE CASCADE,
 CONSTRAINT FKMANU_CODE FOREIGN KEY (MANU_CODE)
-REFERENCES MANUFACTURER_INFO(MANU_CODE) ON DELETE CASCADE,
+REFERENCES MANUFACTURER_INFO(MANU_CODE) ON DELETE CASCADE
 );
+
+INSERT INTO FRESH_AIR_GRILLE VALUES ('23114', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '6');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('16877', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '8');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('60217', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '10');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('59101', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '12');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('49699', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '14');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('13834', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '16');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('55306', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '18');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('55727', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '20');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('95054', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '22');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('96502', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '24');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('34804', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '26');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('64408', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '28');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('36164', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '30');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('84468', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '32');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('41922', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '34');
+INSERT INTO FRESH_AIR_GRILLE VALUES ('88097', '023', '623', '92HVO — Steel Double Deflection Grille, No damper', '4', '36');
 
 INSERT INTO DIFFUSER VALUES ('23114', '032', '623', '20 — Steel Round Ceiling Diffuser', 'Round Ceiling Diffuser', '', '6.5', '11.0125', '');
 INSERT INTO DIFFUSER VALUES ('38921', '032', '623', '20 — Steel Round Ceiling Diffuser', 'Round Ceiling Diffuser', '', '8.5', '14.75', '');
@@ -53,10 +82,10 @@ INSERT INTO DIFFUSER VALUES ('32411', '032', '623', '24 — Steel, Step Down, Sq
 INSERT INTO DIFFUSER VALUES ('78489', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '10', '', '', '');
 INSERT INTO DIFFUSER VALUES ('39805', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '12', '', '', '');
 INSERT INTO DIFFUSER VALUES ('29086', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '14', '', '', '');
-INSERT INTO DIFFUSER VALUES ('29086', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '16', '', '', '');
-INSERT INTO DIFFUSER VALUES ('29086', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '18', '', '', '');
-INSERT INTO DIFFUSER VALUES ('29086', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '20', '', '', '');
-INSERT INTO DIFFUSER VALUES ('29086', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '22', '', '', '');
+INSERT INTO DIFFUSER VALUES ('58968', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '16', '', '', '');
+INSERT INTO DIFFUSER VALUES ('14113', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '18', '', '', '');
+INSERT INTO DIFFUSER VALUES ('81579', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '20', '', '', '');
+INSERT INTO DIFFUSER VALUES ('43329', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '22', '', '', '');
 INSERT INTO DIFFUSER VALUES ('29086', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '24', '', '', '');
 
 INSERT INTO MANUFACTURER_INFO VALUES ('276', 'Steven R', '3M Filtrete', '3M Center', 'Building 225-3S-05', 'St. Paul', 'MN', '55144', '(808)-388-3458', '3mproducts.filtrete.us@mmm.com');
