@@ -28,9 +28,11 @@ CREATE TABLE DIFFUSER (
 NO_DIFFUSER CHAR(5) NOT NULL,
 NO_MAIN_EQUIP_TYPE CHAR(3) NOT NULL,
 MANU_CODE CHAR(3) NOT NULL,
+MANU_DESCRIPTION VARCHAR(90),
 TYPE_DIFFUSER VARCHAR(45) NOT NULL,
-DIAMETER_DUCT_IN FLOAT NOT NULL,
-DIAMETER_OUTSIDE_IN NOT NULL,
+SQUARED_IN FLOAT,
+DIAMETER_DUCT_IN FLOAT,
+DIAMETER_OUTSIDE_IN FLOAT,
 COLLAR_IN FLOAT
 CONSTRAINT PKDIFFUSER PRIMARY KEY (NO_DIFFUSER)
 CONSTRAINT FKNO_MAIN_EQUIP_TYPE FOREIGN KEY (NO_MAIN_EQUIP_TYPE)
@@ -39,18 +41,23 @@ CONSTRAINT FKMANU_CODE FOREIGN KEY (MANU_CODE)
 REFERENCES MANUFACTURER_INFO(MANU_CODE) ON DELETE CASCADE,
 );
 
-INSERT INTO DIFFUSER VALUES ('23114', '032', '623', 'Round Ceiling Diffuser', '6.5', '11.0125', '');
-INSERT INTO DIFFUSER VALUES ('38921', '032', '623', 'Round Ceiling Diffuser', '8.5', '14.75', '');
-INSERT INTO DIFFUSER VALUES ('50406', '032', '623', 'Round Ceiling Diffuser', '10.5', '18.25', '');
-INSERT INTO DIFFUSER VALUES ('74908', '032', '623', 'Round Ceiling Diffuser', '12.5', '22', '');
-INSERT INTO DIFFUSER VALUES ('97539', '032', '623', 'Round Ceiling Diffuser', '14.5', '26', '');
-INSERT INTO DIFFUSER VALUES ('89930', '032', '623', 'Round Ceiling Diffuser', '16.5', '29', '');
-INSERT INTO DIFFUSER VALUES ('70788', '032', '623', 'Round Ceiling Diffuser', '18.5', '33.5', '');
-INSERT INTO DIFFUSER VALUES ('71110', '032', '623', 'Round Ceiling Diffuser', '', '', '');
-INSERT INTO DIFFUSER VALUES ('32411', '032', '623', );
-INSERT INTO DIFFUSER VALUES ('78489', '032', '623', );
-INSERT INTO DIFFUSER VALUES ('39805', '032', '623', );
-INSERT INTO DIFFUSER VALUES ('29086', '032', '623', );
+INSERT INTO DIFFUSER VALUES ('23114', '032', '623', '20 — Steel Round Ceiling Diffuser', 'Round Ceiling Diffuser', '', '6.5', '11.0125', '');
+INSERT INTO DIFFUSER VALUES ('38921', '032', '623', '20 — Steel Round Ceiling Diffuser', 'Round Ceiling Diffuser', '', '8.5', '14.75', '');
+INSERT INTO DIFFUSER VALUES ('50406', '032', '623', '20 — Steel Round Ceiling Diffuser', 'Round Ceiling Diffuser', '', '10.5', '18.25', '');
+INSERT INTO DIFFUSER VALUES ('74908', '032', '623', '20 — Steel Round Ceiling Diffuser', 'Round Ceiling Diffuser', '', '12.5', '22', '');
+INSERT INTO DIFFUSER VALUES ('97539', '032', '623', '20 — Steel Round Ceiling Diffuser', 'Round Ceiling Diffuser', '', '14.5', '26', '');
+INSERT INTO DIFFUSER VALUES ('89930', '032', '623', '20 — Steel Round Ceiling Diffuser', 'Round Ceiling Diffuser', '', '16.5', '29', '');
+INSERT INTO DIFFUSER VALUES ('70788', '032', '623', '20 — Steel Round Ceiling Diffuser', 'Round Ceiling Diffuser', '', '18.5', '33.5', '');
+INSERT INTO DIFFUSER VALUES ('71110', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '6', '', '', '');
+INSERT INTO DIFFUSER VALUES ('32411', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '8', '', '', '');
+INSERT INTO DIFFUSER VALUES ('78489', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '10', '', '', '');
+INSERT INTO DIFFUSER VALUES ('39805', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '12', '', '', '');
+INSERT INTO DIFFUSER VALUES ('29086', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '14', '', '', '');
+INSERT INTO DIFFUSER VALUES ('29086', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '16', '', '', '');
+INSERT INTO DIFFUSER VALUES ('29086', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '18', '', '', '');
+INSERT INTO DIFFUSER VALUES ('29086', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '20', '', '', '');
+INSERT INTO DIFFUSER VALUES ('29086', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '22', '', '', '');
+INSERT INTO DIFFUSER VALUES ('29086', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '24', '', '', '');
 
 INSERT INTO MANUFACTURER_INFO VALUES ('276', 'Steven R', '3M Filtrete', '3M Center', 'Building 225-3S-05', 'St. Paul', 'MN', '55144', '(808)-388-3458', '3mproducts.filtrete.us@mmm.com');
 INSERT INTO MANUFACTURER_INFO VALUES ('618', '', 'AAF Flanders', '9920 Corporate Campus Drive', 'Suite 2200', 'Louisville', 'KY', '40223', '(888)-223-2003', '');
