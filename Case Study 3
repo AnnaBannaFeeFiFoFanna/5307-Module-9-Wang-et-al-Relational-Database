@@ -223,8 +223,8 @@ INSERT INTO DIFFUSER VALUES ('29086', '032', '623', '24 — Steel, Step Down, Sq
 INSERT INTO DIFFUSER VALUES ('43330', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '22', NULL, NULL, NULL);
 INSERT INTO DIFFUSER VALUES ('29089', '032', '623', '24 — Steel, Step Down, Square Diffuser', 'Square Ceiling Diffuser', '24', NULL, NULL, NULL);
 
-/*This query pulls from the five current equipment tables. The query matches the primary key identifying the manufacturer name to count the number of times each manufacturer is represented within the database. A similar query among automated selection results could offer leverage when bargaining with different manufacturers.*/
 
+/*This query pulls from the five current equipment tables. The query matches the primary key identifying the manufacturer name to count the number of times each manufacturer is represented within the database. A similar query among automated selection results could offer leverage when bargaining with different manufacturers.*/
 DROP VIEW IF EXISTS EQUIPMENT_COUNTS_BY_MANU;
 
 CREATE VIEW EQUIPMENT_COUNTS_BY_MANU AS
@@ -257,3 +257,19 @@ GROUP BY MANU_NAME
 ORDER BY MANU_NAME;
 
 
+/*This query sets threshholds for air filter ratings.*/
+SELECT * FROM AIR_FILTER
+WHERE RATING_TYPE = 'MERV' AND RATING = 13
+OR RATING_TYPE = 'MPR' AND RATING = 2800
+OR RATING_TYPE = 'FPR' AND RATING = 10;
+
+
+/*This query finds round diffusers that match air ducts within a half inch*/
+SELECT DISTINCT(NO_DIFFUSER), DIAMETER_DUCT_IN
+FROM DIFFUSER
+WHERE (DIAMETER_DUCT_IN = 14.5 AND (DIAMETER_DUCT_IN)-.5)
+OR (DIAMETER_DUCT_IN = 14.5 AND (DIAMETER_DUCT_IN)+.5) IN
+	(SELECT AIR_DUCT_DIAMETER
+	FROM AIR_DUCT)
+GROUP BY NO_DIFFUSER
+ORDER BY NO_DIFFUSER, DIAMETER_DUCT_IN;
